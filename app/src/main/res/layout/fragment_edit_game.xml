@@ -6,28 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".fragments.EditGameFragment">
 
-    <Button
-        android:id="@+id/editResourcesButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:text="Suroviny"
-        app:layout_constraintBottom_toTopOf="@+id/editBuildingsButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/editBuildingsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
         android:text="Budovy"
         app:layout_constraintBottom_toTopOf="@+id/editTerritoriesButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editResourcesButton" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/editTerritoriesButton"
@@ -66,7 +56,7 @@
         android:id="@+id/editGroupsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="150dp"
         android:text="Skupiny"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

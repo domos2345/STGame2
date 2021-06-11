@@ -17,7 +17,7 @@ class ResourceViewModel(private val repository: Repository) : ViewModel() {
      * Launching a new coroutine to insert the data in a non-blocking way
      */
     fun insert(resource: Resource) = viewModelScope.launch {
-        repository.insert(resource)
+        repository.insertResource(resource)
     }
 }
 

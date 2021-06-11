@@ -29,7 +29,11 @@
         android:id="@+id/gameFragment"
         android:name="vyvojmobilnychapk.project3.stgame2.fragments.GameFragment"
         android:label="fragment_game"
-        tools:layout="@layout/fragment_game" />
+        tools:layout="@layout/fragment_game" >
+        <action
+            android:id="@+id/action_gameFragment_to_groupsFragment"
+            app:destination="@id/groupsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/groupDetailFragment"
         android:name="vyvojmobilnychapk.project3.stgame2.fragments.GroupDetailFragment"
@@ -40,4 +44,13 @@
         android:name="vyvojmobilnychapk.project3.stgame2.fragments.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/groupsFragment"
+        android:name="vyvojmobilnychapk.project3.stgame2.fragments.GroupsFragment"
+        android:label="fragment_groups"
+        tools:layout="@layout/fragment_groups" >
+        <action
+            android:id="@+id/action_groupsFragment_to_groupDetailFragment"
+            app:destination="@id/groupDetailFragment" />
+    </fragment>
 </navigation>

@@ -18,6 +18,8 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import vyvojmobilnychapk.project3.stgame2.MyApp
 import vyvojmobilnychapk.project3.stgame2.R
+import vyvojmobilnychapk.project3.stgame2.entities.Resource
+import vyvojmobilnychapk.project3.stgame2.models.ResourceModel
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -30,7 +32,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [MainMenuFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MainMenuFragment : Fragment(), View.OnClickListener {
+class MainMenuFragment : Fragment() {
 
     lateinit var navController: NavController
 
@@ -47,15 +49,27 @@ class MainMenuFragment : Fragment(), View.OnClickListener {
 
         navController = Navigation.findNavController(view)
         view.findViewById<Button>(R.id.gameButton).setOnClickListener {
-            if(isFirstTime()){
+            if (isFirstTime()) {
                 showDialog()
             }
             navController.navigate(R.id.action_mainMenuFragment_to_gameFragment)
         }
-        view.findViewById<Button>(R.id.editGameButton).setOnClickListener(this)
-        view.findViewById<Button>(R.id.settingsButton).setOnClickListener(this)
+        view.findViewById<Button>(R.id.editGameButton).setOnClickListener {
+            if (isFirstTime()) {
+                Toast.makeText(activity, "go to HRA first", Toast.LENGTH_SHORT).show()
+            } else {
+                navController.navigate(R.id.action_mainMenuFragment_to_editGameFragment)
+            }
+        }
+        view.findViewById<Button>(R.id.settingsButton).setOnClickListener {
+            if (isFirstTime()) {
+                Toast.makeText(activity, "go to HRA first", Toast.LENGTH_SHORT).show()
+            } else {
+                navController.navigate(R.id.action_mainMenuFragment_to_settingsFragment)
+            }
+        }
 
-        if (isFirstTime()){
+        if (isFirstTime()) {
             showDialog()
         }
     }
@@ -63,32 +77,15 @@ class MainMenuFragment : Fragment(), View.OnClickListener {
     private fun isFirstTime(): Boolean {
         val sharedPreferences = MyApp.INSTANCE.getPreferences()
         return sharedPreferences.getBoolean("firstTime", true)
-
     }
 
-    fun afterGroupNumberSaved() {
+    fun afterGroupNumberSaved(numberOfGroups:Int) {
         navController.navigate(R.id.action_mainMenuFragment_to_gameFragment)
 
         val editor: SharedPreferences.Editor = MyApp.INSTANCE.getEditor()
         editor.putBoolean("firstTime", false)
         editor.commit()
-
-    }
-
-    override fun onClick(v: View?) {
-        if (!isFirstTime()) {
-            when (v!!.id) {
-
-                R.id.editGameButton -> navController.navigate(R.id.action_mainMenuFragment_to_editGameFragment)
-                R.id.gameButton -> navController.navigate(R.id.action_mainMenuFragment_to_settingsFragment)
-            }
-        } else {
-            if (v!!.id == R.id.gameButton) {
-                showDialog()
-            } else {
-                Toast.makeText(activity, "go to HRA first", Toast.LENGTH_SHORT).show()
-            }
-        }
+        MyApp.INSTANCE.repository.initGroupResources(numberOfGroups)
 
     }
 
@@ -96,20 +93,16 @@ class MainMenuFragment : Fragment(), View.OnClickListener {
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
         builder.setTitle("zadaj počet skupín")
 
-// Set up the input
 
 // Set up the input
         val input = EditText(activity)
 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_CLASS_NUMBER
+        input.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_NORMAL
         builder.setView(input)
 
 // Set up the buttons
-
-// Set up the buttons
         builder.setPositiveButton("OK",
-            DialogInterface.OnClickListener { dialog, which -> afterGroupNumberSaved() })
+            DialogInterface.OnClickListener { dialog, which -> afterGroupNumberSaved(input.text.toString().toInt()) })
         builder.setNegativeButton("Cancel",
             DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
 

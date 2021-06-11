@@ -17,10 +17,10 @@ import kotlin.reflect.KClass
 @Database(
     entities = [
         Resource::class, Group::class, Building::class, Territory::class, BuildingResource::class,
-        GroupResource::class, TerritoryBuilding::class,
+        GroupResource::class, GroupTerritory::class, TerritoryBuilding::class,
         Market::class, Reward::class
     ],
-    version = 4,
+    version = 5,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
