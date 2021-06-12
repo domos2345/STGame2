@@ -6,5 +6,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "resource_table")
 data class Resource(
     @PrimaryKey val name: String,
-    val nameToDisplay: String
+    val nameToDisplay: String,
+    val isMarketable: Boolean
 )

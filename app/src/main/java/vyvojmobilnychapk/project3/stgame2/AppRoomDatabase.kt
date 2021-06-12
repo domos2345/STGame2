@@ -20,7 +20,7 @@ import kotlin.reflect.KClass
         GroupResource::class, GroupTerritory::class, TerritoryBuilding::class,
         Market::class, Reward::class
     ],
-    version = 5,
+    version = 6,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -57,21 +57,8 @@ public abstract class AppRoomDatabase : RoomDatabase() {
             val sealedSubclasses =
                 ResourceModel::class.sealedSubclasses.mapNotNull { it.objectInstance }
                     .forEach { res ->
-                        resourceDao.insert(Resource(res.name, res.nameToDisplay))
+                        resourceDao.insert(Resource(res.name, res.nameToDisplay,false))
                     }
-
-//            // Add sample words.
-//            var res = Resource("1Wood", "drevo")
-//            resourceDao.insert(res)
-//            res = Resource("2Brick", "tehly")
-//            resourceDao.insert(res)
-//            res = Resource("3Iron", "železo")
-//            resourceDao.insert(res)
-//            res = Resource("4People", "zamestnanci")
-//            resourceDao.insert(res)
-//            res = Resource("5Money", "peniaze")
-//            resourceDao.insert(res)
-
         }
     }
 

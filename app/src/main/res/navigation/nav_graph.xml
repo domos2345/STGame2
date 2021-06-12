@@ -24,7 +24,11 @@
         android:id="@+id/editGameFragment"
         android:name="vyvojmobilnychapk.project3.stgame2.fragments.EditGameFragment"
         android:label="fragment_edit_game"
-        tools:layout="@layout/fragment_edit_game" />
+        tools:layout="@layout/fragment_edit_game" >
+        <action
+            android:id="@+id/action_editGameFragment_to_editMarketFragment"
+            app:destination="@id/editMarketFragment" />
+    </fragment>
     <fragment
         android:id="@+id/gameFragment"
         android:name="vyvojmobilnychapk.project3.stgame2.fragments.GameFragment"
@@ -53,4 +57,9 @@
             android:id="@+id/action_groupsFragment_to_groupDetailFragment"
             app:destination="@id/groupDetailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/editMarketFragment"
+        android:name="vyvojmobilnychapk.project3.stgame2.fragments.EditMarketFragment"
+        android:label="fragment_edit_market"
+        tools:layout="@layout/fragment_edit_market" />
 </navigation>

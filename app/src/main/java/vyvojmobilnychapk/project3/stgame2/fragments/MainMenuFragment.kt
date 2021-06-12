@@ -1,7 +1,6 @@
 package vyvojmobilnychapk.project3.stgame2.fragments
 
 import android.app.AlertDialog
-import android.content.Context
 import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -16,10 +15,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import kotlinx.coroutines.launch
 import vyvojmobilnychapk.project3.stgame2.MyApp
 import vyvojmobilnychapk.project3.stgame2.R
-import vyvojmobilnychapk.project3.stgame2.entities.Resource
-import vyvojmobilnychapk.project3.stgame2.models.ResourceModel
+import vyvojmobilnychapk.project3.stgame2.dialogs.Dialogs
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -48,12 +47,14 @@ class MainMenuFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         navController = Navigation.findNavController(view)
+        //GAME
         view.findViewById<Button>(R.id.gameButton).setOnClickListener {
             if (isFirstTime()) {
-                showDialog()
+                Dialogs().showNumberOfGroupsDialog(this.requireContext(),true)
             }
             navController.navigate(R.id.action_mainMenuFragment_to_gameFragment)
         }
+        //EDIT GAME
         view.findViewById<Button>(R.id.editGameButton).setOnClickListener {
             if (isFirstTime()) {
                 Toast.makeText(activity, "go to HRA first", Toast.LENGTH_SHORT).show()
@@ -61,16 +62,18 @@ class MainMenuFragment : Fragment() {
                 navController.navigate(R.id.action_mainMenuFragment_to_editGameFragment)
             }
         }
+        //SETTINGS
         view.findViewById<Button>(R.id.settingsButton).setOnClickListener {
             if (isFirstTime()) {
                 Toast.makeText(activity, "go to HRA first", Toast.LENGTH_SHORT).show()
             } else {
                 navController.navigate(R.id.action_mainMenuFragment_to_settingsFragment)
+                MyApp.INSTANCE.repository.getAllGrs()
             }
         }
 
         if (isFirstTime()) {
-            showDialog()
+            Dialogs().showNumberOfGroupsDialog(this.requireContext(),true)
         }
     }
 
@@ -79,33 +82,8 @@ class MainMenuFragment : Fragment() {
         return sharedPreferences.getBoolean("firstTime", true)
     }
 
-    fun afterGroupNumberSaved(numberOfGroups:Int) {
-        navController.navigate(R.id.action_mainMenuFragment_to_gameFragment)
-
-        val editor: SharedPreferences.Editor = MyApp.INSTANCE.getEditor()
-        editor.putBoolean("firstTime", false)
-        editor.commit()
-        MyApp.INSTANCE.repository.initGroupResources(numberOfGroups)
-
-    }
-
-    fun showDialog() {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
-        builder.setTitle("zadaj počet skupín")
 
 
-// Set up the input
-        val input = EditText(activity)
-// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        input.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_NORMAL
-        builder.setView(input)
 
-// Set up the buttons
-        builder.setPositiveButton("OK",
-            DialogInterface.OnClickListener { dialog, which -> afterGroupNumberSaved(input.text.toString().toInt()) })
-        builder.setNegativeButton("Cancel",
-            DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
 
-        builder.show()
-    }
 }

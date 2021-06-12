@@ -12,6 +12,9 @@ interface GroupResourceDao {
     @Query("SELECT * FROM group_resource_table ORDER BY groupId ASC")
     fun getSortedGroupResources(): Flow<List<GroupResource>>
 
+    @Query("SELECT * FROM group_resource_table ORDER BY groupId ASC")
+    fun getSortedGroupResourcesList(): List<GroupResource>
+
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(groupResource: GroupResource)
